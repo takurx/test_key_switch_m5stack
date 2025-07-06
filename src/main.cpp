@@ -18,9 +18,9 @@ void setup() {
   M5.Lcd.setCursor(10, 40);
   M5.Lcd.println("A: 'A'");
   M5.Lcd.setCursor(10, 70);
-  M5.Lcd.println("B: '😆'");
+  M5.Lcd.println("B: ':D'");
   M5.Lcd.setCursor(10, 100);
-  M5.Lcd.println("C: '🍭✒'");
+  M5.Lcd.println("C: 'Hello!'");
   
   Serial.begin(115200);
   Serial.println("Starting BLE Keyboard...");
@@ -55,8 +55,8 @@ void loop() {
     // Button B pressed
     if(M5.BtnB.wasPressed() && !buttonBPressed) {
       buttonBPressed = true;
-      bleKeyboard.print("😆");
-      Serial.println("Button B pressed - sent '😆'");
+      bleKeyboard.print(":D");
+      Serial.println("Button B pressed - sent ':D'");
       
       // Visual feedback
       M5.Lcd.fillRect(10, 170, 300, 30, BLUE);
@@ -70,8 +70,8 @@ void loop() {
     // Button C pressed
     if(M5.BtnC.wasPressed() && !buttonCPressed) {
       buttonCPressed = true;
-      bleKeyboard.print("🍭✒");
-      Serial.println("Button C pressed - sent '🍭✒'");
+      bleKeyboard.print("Hello!");
+      Serial.println("Button C pressed - sent 'Hello!'");
       
       // Visual feedback
       M5.Lcd.fillRect(10, 170, 300, 30, RED);
