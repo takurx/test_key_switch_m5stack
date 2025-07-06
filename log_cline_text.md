@@ -8,3 +8,16 @@ platformioを使用する
 m5stack esp32のファームウェアを作る
 
 ## No.2
+bleKeyboard.printがうまくいってないようだ。原因を調査して、readmeに記載する内容を考えてください
+- success
+  - Serial.printlnはOK
+  - bleKeyboard.print("A");
+  →A
+
+- failure
+  - M5stackの画面上の文字化け
+  - bleKeyboard.print("😆");
+  →tm
+  - bleKeyboard.print("🍭✒");
+  →tb82qg
+
