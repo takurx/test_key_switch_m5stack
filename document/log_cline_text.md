@@ -21,3 +21,18 @@ bleKeyboard.printがうまくいってないようだ。原因を調査して、
   - bleKeyboard.print("🍭✒");
   →tb82qg
 
+## No.3
+m5stack s3でUSB HIDキーボードとして動作させれば、絵文字などのマルチバイト文字が取り扱いできるか？
+
+取り扱いできるなら、
+２つのファイルを作成し、
+- test_key_switch_m5stack_basic
+- test_key_switch_m5stack_s3
+
+これまでの内容をtest_key_switch_m5stack_basic以下に移動し、
+
+test_key_switch_m5stack_s3以下に
+m5stack s3をUSB keyboardとして、Aボタンを押したら"A"をkey入力、Aボタンを押したら"😆"をkey入力、Cボタンを押したら"🍭✒"をkey入力するファームウェアを作成してください
+- constraint condition
+platformioを使用する
+
