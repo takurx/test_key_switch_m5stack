@@ -36,3 +36,17 @@ m5stack s3をUSB keyboardとして、Aボタンを押したら"A"をkey入力、
 - constraint condition
 platformioを使用する
 
+No.4
+M5Stack S3ではボタンA, B, Cがないので、
+代わりに画面のタッチ位置を検出して、以下のようにボタンを割り当ててください
+if (x < 80 && y > 200) {
+  // Aボタン相当
+}
+else if (x >= 80 && x < 160 && y > 200) {
+  // Bボタン相当
+}
+else if (x >= 160 && y > 200) {
+  // Cボタン相当
+}
+
+

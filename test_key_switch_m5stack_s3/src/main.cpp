@@ -9,6 +9,28 @@ bool buttonAPressed = false;
 bool buttonBPressed = false;
 bool buttonCPressed = false;
 
+void drawTouchButtons() {
+  // Draw touch button areas
+  M5.Display.fillRect(0, 200, 80, 40, DARKGREY);
+  M5.Display.fillRect(80, 200, 80, 40, DARKGREY);
+  M5.Display.fillRect(160, 200, 80, 40, DARKGREY);
+  
+  // Draw button borders
+  M5.Display.drawRect(0, 200, 80, 40, WHITE);
+  M5.Display.drawRect(80, 200, 80, 40, WHITE);
+  M5.Display.drawRect(160, 200, 80, 40, WHITE);
+  
+  // Draw button labels
+  M5.Display.setTextColor(WHITE);
+  M5.Display.setTextSize(2);
+  M5.Display.setCursor(30, 215);
+  M5.Display.println("A");
+  M5.Display.setCursor(110, 215);
+  M5.Display.println("B");
+  M5.Display.setCursor(190, 215);
+  M5.Display.println("C");
+}
+
 void setup() {
   auto cfg = M5.config();
   M5.begin(cfg);
@@ -19,10 +41,12 @@ void setup() {
   M5.Display.setCursor(10, 10);
   M5.Display.println("USB HID Keyboard");
   M5.Display.setCursor(10, 40);
-  M5.Display.println("A: 'A'");
+  M5.Display.println("Touch Areas:");
   M5.Display.setCursor(10, 70);
-  M5.Display.println("B: '😆'");
+  M5.Display.println("A: 'A'");
   M5.Display.setCursor(10, 100);
+  M5.Display.println("B: '😆'");
+  M5.Display.setCursor(10, 130);
   M5.Display.println("C: '🍭✒'");
   
   Serial.begin(115200);
@@ -32,74 +56,86 @@ void setup() {
   Keyboard.begin();
   USB.begin();
   
-  M5.Display.setCursor(10, 140);
+  // Draw touch buttons
+  drawTouchButtons();
+  
+  M5.Display.setCursor(10, 160);
   M5.Display.println("Ready!");
 }
 
 void loop() {
   M5.update();
   
-  // Button A pressed
-  if(M5.BtnA.wasPressed() && !buttonAPressed) {
-    buttonAPressed = true;
-    Keyboard.print("A");
-    Serial.println("Button A pressed - sent 'A'");
+  // Check for touch input
+  auto touch = M5.Touch.getDetail();
+  if (touch.wasPressed()) {
+    int x = touch.x;
+    int y = touch.y;
     
-    // Visual feedback
-    M5.Display.fillRect(10, 170, 300, 30, GREEN);
-    M5.Display.setTextColor(BLACK);
-    M5.Display.setCursor(10, 175);
-    M5.Display.println("A pressed!");
-    delay(200);
-    M5.Display.fillRect(10, 170, 300, 30, BLACK);
-    M5.Display.setTextColor(WHITE);
+    Serial.printf("Touch detected at x=%d, y=%d\n", x, y);
+    
+    if (x < 80 && y > 200) {
+      // A button area
+      if (!buttonAPressed) {
+        buttonAPressed = true;
+        Keyboard.print("A");
+        Serial.println("Touch A area - sent 'A'");
+        
+        // Visual feedback
+        M5.Display.fillRect(0, 200, 80, 40, GREEN);
+        M5.Display.setTextColor(BLACK);
+        M5.Display.setCursor(30, 215);
+        M5.Display.println("A");
+        delay(200);
+        drawTouchButtons();
+      }
+    }
+    else if (x >= 80 && x < 160 && y > 200) {
+      // B button area
+      if (!buttonBPressed) {
+        buttonBPressed = true;
+        Keyboard.print("😆");
+        Serial.println("Touch B area - sent '😆'");
+        
+        // Visual feedback
+        M5.Display.fillRect(80, 200, 80, 40, BLUE);
+        M5.Display.setTextColor(WHITE);
+        M5.Display.setCursor(110, 215);
+        M5.Display.println("B");
+        delay(200);
+        drawTouchButtons();
+      }
+    }
+    else if (x >= 160 && y > 200) {
+      // C button area
+      if (!buttonCPressed) {
+        buttonCPressed = true;
+        Keyboard.print("🍭✒");
+        Serial.println("Touch C area - sent '🍭✒'");
+        
+        // Visual feedback
+        M5.Display.fillRect(160, 200, 80, 40, RED);
+        M5.Display.setTextColor(WHITE);
+        M5.Display.setCursor(190, 215);
+        M5.Display.println("C");
+        delay(200);
+        drawTouchButtons();
+      }
+    }
   }
   
-  // Button B pressed
-  if(M5.BtnB.wasPressed() && !buttonBPressed) {
-    buttonBPressed = true;
-    Keyboard.print("😆");
-    Serial.println("Button B pressed - sent '😆'");
-    
-    // Visual feedback
-    M5.Display.fillRect(10, 170, 300, 30, BLUE);
-    M5.Display.setTextColor(WHITE);
-    M5.Display.setCursor(10, 175);
-    M5.Display.println("B pressed!");
-    delay(200);
-    M5.Display.fillRect(10, 170, 300, 30, BLACK);
-  }
-  
-  // Button C pressed
-  if(M5.BtnC.wasPressed() && !buttonCPressed) {
-    buttonCPressed = true;
-    Keyboard.print("🍭✒");
-    Serial.println("Button C pressed - sent '🍭✒'");
-    
-    // Visual feedback
-    M5.Display.fillRect(10, 170, 300, 30, RED);
-    M5.Display.setTextColor(WHITE);
-    M5.Display.setCursor(10, 175);
-    M5.Display.println("C pressed!");
-    delay(200);
-    M5.Display.fillRect(10, 170, 300, 30, BLACK);
-  }
-  
-  // Reset button states when released
-  if(M5.BtnA.wasReleased()) {
+  // Reset button states when touch is released
+  if (touch.wasReleased()) {
     buttonAPressed = false;
-  }
-  if(M5.BtnB.wasReleased()) {
     buttonBPressed = false;
-  }
-  if(M5.BtnC.wasReleased()) {
     buttonCPressed = false;
   }
   
   // Update status
-  M5.Display.fillRect(10, 210, 300, 20, BLACK);
+  M5.Display.fillRect(10, 180, 200, 15, BLACK);
   M5.Display.setTextColor(GREEN);
-  M5.Display.setCursor(10, 210);
+  M5.Display.setTextSize(1);
+  M5.Display.setCursor(10, 180);
   M5.Display.println("USB HID Ready");
   
   delay(50);
