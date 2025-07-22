@@ -2,6 +2,8 @@
 #include <M5Stack.h>
 #include <BleKeyboard.h>
 
+#define SHIFT 0x80 // from BleKeyboard.cpp
+
 BleKeyboard bleKeyboard("M5Stack Keyboard", "M5Stack", 100);
 
 bool buttonAPressed = false;
@@ -77,7 +79,20 @@ void loop() {
       // US keyboard layout
       // bleKeyboard.print(":lollipop::black_nib:");
       // JP keyboard layout
-      bleKeyboard.print("'lollipop''black_nib'");
+      //bleKeyboard.print(0x2d|SHIFT); //173
+      bleKeyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
+      //bleKeyboard.write(0x87);
+      bleKeyboard.write(0x2D); // JP keyboard layoutでは '='
+      bleKeyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
+      bleKeyboard.write(KEY_NUM_ENTER);
+      //bleKeyboard.print("'lollipop''black_nib'");
+      bleKeyboard.print(":lollipop:");
+      bleKeyboard.print(":black");
+      bleKeyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
+      bleKeyboard.write(0x2D); // JP keyboard layoutでは '='
+      bleKeyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
+      bleKeyboard.print("nib:");  
+      //bleKeyboard.print("'black_nib'");
       // -> :lollipop::black=nib:
       Serial.println("Button C pressed - sent ':lollipop::black_nib:'");
       
