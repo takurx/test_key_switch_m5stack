@@ -110,7 +110,15 @@ void loop() {
       // C button area
       if (!buttonCPressed) {
         buttonCPressed = true;
-        Keyboard.print("🍭✒");
+        //Keyboard.print("🍭✒");
+        Keyboard.print(":lollipop:");
+        Keyboard.print(":black");
+        Keyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
+        Keyboard.write(0x2D); // JP keyboard layoutでは '='
+        Keyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
+        Keyboard.print("nib:");  
+        //Keyboard.print("'black_nib'");
+        // -> :lollipop::black=nib:
         Serial.println("Touch C area - sent '🍭✒'");
         
         // Visual feedback
