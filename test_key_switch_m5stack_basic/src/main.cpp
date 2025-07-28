@@ -18,11 +18,11 @@ void setup() {
   M5.Lcd.setCursor(10, 10);
   M5.Lcd.println("BLE Keyboard");
   M5.Lcd.setCursor(10, 40);
-  M5.Lcd.println("A: 'A'");
+  M5.Lcd.println("A: F13");
   M5.Lcd.setCursor(10, 70);
-  M5.Lcd.println("B: ':smile:'");
+  M5.Lcd.println("B: F14");
   M5.Lcd.setCursor(10, 100);
-  M5.Lcd.println("C: ':lollipop::black_nib:'");
+  M5.Lcd.println("C: F15");
   
   Serial.begin(115200);
   Serial.println("Starting BLE Keyboard...");
@@ -41,8 +41,9 @@ void loop() {
     // Button A pressed
     if(M5.BtnA.wasPressed() && !buttonAPressed) {
       buttonAPressed = true;
-      bleKeyboard.print("A");
-      Serial.println("Button A pressed - sent 'A'");
+      bleKeyboard.press(KEY_F13);
+      bleKeyboard.releaseAll();
+      Serial.println("Button A pressed - sent F13");
       
       // Visual feedback
       M5.Lcd.fillRect(10, 170, 300, 30, GREEN);
@@ -57,11 +58,9 @@ void loop() {
     // Button B pressed
     if(M5.BtnB.wasPressed() && !buttonBPressed) {
       buttonBPressed = true;
-      // US keyboard layout
-      // bleKeyboard.print(":smile:");
-      // JP keyboard layout
-      bleKeyboard.print("'smile'");
-      Serial.println("Button B pressed - sent ':smile:'");
+      bleKeyboard.press(KEY_F14);
+      bleKeyboard.releaseAll();
+      Serial.println("Button B pressed - sent F14");
       
       // Visual feedback
       M5.Lcd.fillRect(10, 170, 300, 30, BLUE);
@@ -75,26 +74,9 @@ void loop() {
     // Button C pressed
     if(M5.BtnC.wasPressed() && !buttonCPressed) {
       buttonCPressed = true;
-      // :lollipop:, ::black_nib:
-      // US keyboard layout
-      // bleKeyboard.print(":lollipop::black_nib:");
-      // JP keyboard layout
-      //bleKeyboard.print(0x2d|SHIFT); //173
-      bleKeyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
-      //bleKeyboard.write(0x87);
-      bleKeyboard.write(0x2D); // JP keyboard layoutでは '='
-      bleKeyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
-      bleKeyboard.write(KEY_NUM_ENTER);
-      //bleKeyboard.print("'lollipop''black_nib'");
-      bleKeyboard.print(":lollipop:");
-      bleKeyboard.print(":black");
-      bleKeyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
-      bleKeyboard.write(0x2D); // JP keyboard layoutでは '='
-      bleKeyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
-      bleKeyboard.print("nib:");  
-      //bleKeyboard.print("'black_nib'");
-      // -> :lollipop::black=nib:
-      Serial.println("Button C pressed - sent ':lollipop::black_nib:'");
+      bleKeyboard.press(KEY_F15);
+      bleKeyboard.releaseAll();
+      Serial.println("Button C pressed - sent F15");
       
       // Visual feedback
       M5.Lcd.fillRect(10, 170, 300, 30, RED);
