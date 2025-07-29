@@ -94,8 +94,9 @@ void loop() {
       // B button area
       if (!buttonBPressed) {
         buttonBPressed = true;
-        //Keyboard.print("😆");
-        Keyboard.print("'smile'");  // for US keyboard layout
+        // Keyboard.print("😆");
+        // Keyboard.print(":smile:");  // for US keyboard layout
+        Keyboard.print("'smile'");  // for JP keyboard layout
         Serial.println("Touch B area - sent '😆'");
         
         // Visual feedback
