@@ -112,24 +112,24 @@ void loop() {
       if (!buttonCPressed) {
         buttonCPressed = true;
         
-        // try1
+        // fail, try1 with JP keyboard layout
         //Keyboard.print("🍭✒");
 
-        // try2
+        // fail, try2 with JP keyboard layout
         //Keyboard.print("'black_nib'");
         // -> :lollipop::black=nib:
 
         // patern1, for US keyboard layout
-        Keyboard.print(":lollipop:");  // for US keyboard layout
-        Keyboard.print(":black");  // for US keyboard layout
-        Keyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
-        Keyboard.write(0x2D); // US keyboard layoutでは'_', JP keyboard layoutでは '='
-        Keyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
-        Keyboard.print("nib:");  
+        // Keyboard.print(":lollipop:");  // for US keyboard layout
+        // Keyboard.print(":black");  // for US keyboard layout
+        // Keyboard.press(KEY_LEFT_SHIFT); // Press Left Shift
+        // Keyboard.write(0x2D); // US keyboard layoutでは'_', JP keyboard layoutでは '='
+        // Keyboard.release(KEY_LEFT_SHIFT); // Release Left Shift
+        // Keyboard.print("nib:");  
         
         // patern2, for US keyboard layout
-        // Keyboard.print(":lollipop:");  // for US keyboard layout
-        // Keyboard.print(":black_nib:");  // for US keyboard layout
+        Keyboard.print(":lollipop:");  // for US keyboard layout
+        Keyboard.print(":black_nib:");  // for US keyboard layout
         
         // patern3, for JP keyboard layout
         // Keyboard.print("'lollipop'");  // for JP keyboard layout
